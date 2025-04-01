@@ -5,3 +5,4 @@ from .models import User
 class UserAdmin(admin.ModelAdmin):
   list_display = ('username', 'email', 'password') #Display these fields in the admin list
   search_fields = ('username', 'email') # searchs for a username/email
+

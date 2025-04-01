@@ -6,6 +6,6 @@ class User(models.Model):
   email = models.EmailField(unique=True)
   password = models.CharField(max_length=128)
 
-#Setup the logjn info in models for the event app.
-
+#Setup the login info in models for the event app.
+#LUISCHAVEZ 3/30/2025 4:30 pm
 
