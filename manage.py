@@ -2,7 +2,7 @@
 """Django's command-line utility for administrative tasks."""
 import os
 import sys
-
+#Main Django management script (run commands like runserver, migrate, etc.)
 
 def main():
     """Run administrative tasks."""
