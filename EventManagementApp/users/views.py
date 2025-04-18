@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
+from events.models import Event
+from .forms import ProfileForm
 
 # Create views here.
 def registration_view(request):
@@ -28,3 +30,19 @@ def dashboard_view(request):
     else:
         role = "User"
         return render(request, 'user_dashboard.html', {'role': role})
+
+@login_required
+def view_profile(request):
+    profile = request.user.profile
+    events = Event.objects.filter(created_by=request.user)
+    return render(request, 'users/profile.html', {'profile': profile, 'events': events})
+
+@login_required
+def edit_profile(request):
+    profile = request.user.profile
+    form = ProfileForm(request.POST or None, request.FILES or None, instance=profile)
+    if form.is_valid():
+        form.save()
+        return redirect('view_profile')
+
+    return render(request, 'users/edit_profile.html', {'form': form})

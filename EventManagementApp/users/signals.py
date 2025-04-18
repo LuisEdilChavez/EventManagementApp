@@ -10,7 +10,7 @@ def handle_user_created(sender, instance, created, **kwargs):
   if created:
     #Creates profile hopefully....
     profile = Profile.objects.create(user=instance)
-    
+
     # Account registration confirmation email for the user. Gets sent to email entered.
     subject = 'Welcome the Montclair Connect!'
     message = f'Hello {instance.username},\n\nThank you for signing up to Montclair Connect!'
@@ -27,4 +27,4 @@ def handle_user_created(sender, instance, created, **kwargs):
 def save_user_profile(sender, instance, **kwargs):
   instance.profile.save()
 
-#combined all logic for a user creation into 1 handler, should work
+#combined all logic for a user creation into 1 handler, should work....

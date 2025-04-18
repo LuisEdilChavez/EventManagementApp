@@ -17,6 +17,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from users.views import home_view, dashboard_view
+from django.conf import settings
+from django.conf.urls.static import static
 # Make sure to import the view names from views.py, Add a comma and the views name to the import.
 
 urlpatterns = [
@@ -26,4 +28,4 @@ urlpatterns = [
     path('dashboard/', dashboard_view, name='dashboard'), # dashboard view
     path('events/', include('events.url')), #Include events 
     
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
