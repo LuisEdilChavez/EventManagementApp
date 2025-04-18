@@ -24,4 +24,6 @@ urlpatterns = [
     path('accounts/', include('users.urls')),  # connects /accounts/ to your registration/login views
     path('', home_view, name='home'), # makes the / show the homepage.
     path('dashboard/', dashboard_view, name='dashboard'), # dashboard view
+    path('events/', include('events.url')), #Include events 
+    
 ]
