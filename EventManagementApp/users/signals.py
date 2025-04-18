@@ -3,21 +3,23 @@ from django.dispatch import receiver
 from django.contrib.auth.models import User
 from .models import Profile
 from django.core.mail import send_mail
-from Twilio import send_sms
+from twilio import send_sms
 
 @receiver(post_save, sender=User)
 def handle_user_created(sender, instance, created, **kwargs):
   if created:
-    #Create profile
-    Profile.objects.create(user=instance)
+    #Creates profile hopefully....
+    profile = Profile.objects.create(user=instance)
     
+    # Account registration confirmation email for the user. Gets sent to email entered.
     subject = 'Welcome the Montclair Connect!'
     message = f'Hello {instance.username},\n\nThank you for signing up to Montclair Connect!'
     from_email = 'your_email@gmail.com'
     recipient_list = [instance.email]
 
+    # Sends SMS message
     send_mail(subject, message, from_email, recipient_list)
-    if profile.recieve.sms and profile.phone_number:
+    if profile.recieve_sms and profile.phone_number:
         sms_message = f"Hello {instance.username}, Welcome to Montclair Connect, Thank You for signing up for SMS messaging."
         send_sms(to=profile.phone_number, message=sms_message)
 
