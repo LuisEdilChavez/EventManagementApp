@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'users',
+    'users.apps.UserConfig',
 ]
 
 MIDDLEWARE = [
@@ -128,3 +129,13 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_REDIRECT_URL = '/admin_dashboard/'  
 LOGOUT_REDIRECT_URL = '/' # goes to homepage after logout
 
+#Email backend here.
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'your_email@gmail.com'  # Replace with your email
+EMAIL_HOST_PASSWORD = 'your_password'  # Replace with your email password
+MEDIA_URL = '/media'
+MEDIA_ROOT = BASE_DIR / 'media'
