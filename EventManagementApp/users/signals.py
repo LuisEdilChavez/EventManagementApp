@@ -3,7 +3,8 @@ from django.dispatch import receiver
 from django.contrib.auth.models import User
 from .models import Profile
 from django.core.mail import send_mail
-from twilio import send_sms
+from twilio.rest import Client
+import os
 
 @receiver(post_save, sender=User)
 def handle_user_created(sender, instance, created, **kwargs):
@@ -18,10 +19,24 @@ def handle_user_created(sender, instance, created, **kwargs):
     recipient_list = [instance.email]
 
     # Sends SMS message
+    account_sid = os.getenv('TWILIO_ACCOUNT_SID')
+    auth_token = os.getenv('TWILIO_AUTH_TOKEN')
+    twilio_number = os.getenv('TWILIO_PHONE_NUMBER')
+
     send_mail(subject, message, from_email, recipient_list)
     if profile.recieve_sms and profile.phone_number:
-        sms_message = f"Hello {instance.username}, Welcome to Montclair Connect, Thank You for signing up for SMS messaging."
-        send_sms(to=profile.phone_number, message=sms_message)
+        sms_message = f"Hello {instance.username}, Welcome to Montclair Connect, Thank You for signing up for SMS messaging. You will be notified of ongoings pertaining to Events."
+    account_sid = os.getenv('TWILIO_ACCOUNT_SID')  # or use plain strings
+    auth_token = os.getenv('TWILIO_AUTH_TOKEN')
+    twilio_number = os.getenv('TWILIO_PHONE_NUMBER')
+
+  #previous send_sms function doesnt actually work so I swapped for Twilio rest to send SMS messages to phones.
+    client = Client(account_sid, auth_token)
+    client.messages.create(
+    body=sms_message,
+    from_=twilio_number,
+    to=profile.phone_number
+    )
 
 @receiver(post_save, sender=User)
 def save_user_profile(sender, instance, **kwargs):

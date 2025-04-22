@@ -24,11 +24,11 @@ SECRET_KEY = 'django-insecure-m9gcxqx5x=mvl-zbotw#s#yzkk(ub75yih-e-qiq-rk&1gf^ja
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
+# used for debugging server issues
 ALLOWED_HOSTS = []
 
 
-# Application definition
+# Application definition, also gotta add any future apps you make to the array.
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'users',
-    'users.apps.UserConfig',
+    'events',
 ]
 
 MIDDLEWARE = [
@@ -137,5 +137,5 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'your_email@gmail.com'  # Replace with your email
 EMAIL_HOST_PASSWORD = 'your_password'  # Replace with your email password
-MEDIA_URL = '/media'
+MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'

@@ -22,10 +22,20 @@ from django.conf.urls.static import static
 # Make sure to import the view names from views.py, Add a comma and the views name to the import.
 
 urlpatterns = [
+  
+    # Admin URL
     path('admin/', admin.site.urls),
-    path('accounts/', include('users.urls')),  # connects /accounts/ to your registration/login views
-    path('', home_view, name='home'), # makes the / show the homepage.
-    path('dashboard/', dashboard_view, name='dashboard'), # dashboard view
-    path('events/', include('events.url')), #Include events 
-    
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+    # Home page
+    path('', home_view, name='home'), 
+
+    #Dashboard Page
+    path('dashboard/', dashboard_view, name='dashboard'),
+
+    #Events URLs (including events app's URL config)
+    path('events/', include('events.urls')), 
+
+    # User URLs (user profile, registration, etc.)
+    path('users/', include('users.urls')),
+
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) # media files etc
