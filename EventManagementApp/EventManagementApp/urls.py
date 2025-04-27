@@ -16,18 +16,18 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from users.views import home_view, dashboard_view
+from users.views import dashboard_view
 from django.conf import settings
 from django.conf.urls.static import static
-# Make sure to import the view names from views.py, Add a comma and the views name to the import.
+from events.views import home_view
 
+# Make sure to import the view names from views.py, Add a comma and the views name to the import.
 urlpatterns = [
   
     # Admin URL
     path('admin/', admin.site.urls),
 
-    # Home page
-    path('', home_view, name='home'), 
+    path('', home_view, name='home'),
 
     #Dashboard Page
     path('dashboard/', dashboard_view, name='dashboard'),

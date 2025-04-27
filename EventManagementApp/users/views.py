@@ -14,12 +14,6 @@ def registration_view(request):
     else:
         form = UserCreationForm()
     return render(request, 'registration.html', {'form': form})
-
-def home_view(request):
-    return render(request, 'home_page.html')
-
-
-
 # This view displays the users dashboard, which depends on the users role (Admin or regular user) based on their credentials
 def dashboard_view(request):
     user = request.user
