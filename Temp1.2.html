@@ -1,0 +1,232 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard with User Button</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background-color: #f4f4f4;
+        }
+
+      
+        .navbar {
+            width: 100%;
+            background-color: #7e0b0b;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 30px;
+        }
+
+        .navbar h2 {
+            font-size: 20px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            padding: 8px 12px;
+            transition: background 0.3s;
+        }
+
+        .nav-links a:hover {
+            background-color: #4c0707;
+            border-radius: 4px;
+        }
+
+        .main-content {
+            padding: 20px;
+        }
+
+        .header {
+            background: #fff;
+            padding: 15px 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .search-bar input {
+            padding: 8px 12px;
+            width: 250px;
+            border: 1px solid #ccc;
+            border-radius: 20px;
+        }
+
+       
+        .profile {
+            position: relative;
+        }
+
+        .user-btn {
+            padding: 8px 16px;
+            background-color: #7e0b0b;
+            color: #fff;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: background 0.3s;
+            font-size: 14px;
+        }
+
+        .user-btn:hover {
+            background-color: #4c0707;
+        }
+
+        .dropdown {
+            display: none;
+            position: absolute;
+            right: 0;
+            margin-top: 10px;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            border-radius: 5px;
+            overflow: hidden;
+            z-index: 100;
+        }
+
+        .dropdown a {
+            display: block;
+            padding: 10px 20px;
+            color: #333;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .dropdown a:hover {
+            background-color: #f0f0f0;
+        }
+
+        .profile:hover .dropdown {
+            display: block;
+        }
+
+     
+        .cards-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 40px;
+            margin-top: 40px;
+            padding: 0 30px;
+        }
+
+        .right-align {
+            align-self: flex-end;
+        }
+
+        .card-container {
+            perspective: 1000px;
+            width: 200px;
+            height: 300px;
+        }
+
+        .card {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.8s;
+        }
+
+        .card-side {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: white;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+        }
+
+        .front {
+            background-color: #720404;
+        }
+
+        @media (max-width: 600px) {
+            .nav-links {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .search-bar input {
+                width: 150px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="navbar">
+        <h2>Montclair State University</h2>
+        <div class="nav-links">
+            <a href="#">Home</a>
+            <a href="#">Active Events</a>
+            <a href="#">Previous Events</a>
+            <a href="#">Upcoming Events</a>
+           
+        </div>
+    </div>
+
+   
+    <div class="main-content">
+        <div class="header">
+            <div class="search-bar">
+                <input type="text" placeholder="Search...">
+            </div>
+            <div class="profile">
+                <button class="user-btn">User ▼</button>
+                <div class="dropdown">
+                    <a href="#">Profile</a>
+                    <a href="#">Settings</a>
+                    <a href="#">Logout</a>
+                </div>
+            </div>
+        </div>
+
+       
+        <div class="cards-wrapper">
+            <div class="card-container">
+                <div class="card">
+                    <div class="card-side front">Front Side</div>
+                </div>
+            </div>
+
+            <div class="card-container right-align">
+                <div class="card">
+                    <div class="card-side front">Front Side</div>
+                </div>
+            </div>
+
+            <div class="card-container">
+                <div class="card">
+                    <div class="card-side front">Front Side</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
