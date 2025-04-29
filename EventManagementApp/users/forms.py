@@ -27,7 +27,7 @@ class CustomUserCreationForm(UserCreationForm):
         if commit:
             user.save()
             # Save Profile fields
-            profile = Profile.objects.get(user=user)
+            profile = Profile.objects.get_or_create(user=user)
             profile.phone_number = self.cleaned_data.get('phone_number')
             profile.receive_sms = self.cleaned_data.get('receive_sms')
             profile.save()

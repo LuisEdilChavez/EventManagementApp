@@ -9,6 +9,7 @@ from django.core.mail import send_mail
 from django.conf import settings
 from django.contrib import messages
 from twilio.rest import Client
+
 def registration_view(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
@@ -34,12 +35,10 @@ def registration_view(request):
             return redirect('login')
     else:
         form = UserCreationForm()
-    return render(request, 'registration.html', {'form': form})
+    return render(request, 'accountcreation/registration_page.html', {'form': form})
 
 def home_view(request):
     return render(request, 'home_page.html')
-
-
 
 # This view displays the users dashboard, which depends on the users role (Admin or regular user) based on their credentials
 def dashboard_view(request):

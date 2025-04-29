@@ -6,9 +6,6 @@ from .models import Event
 @login_required
 def create_event(request):
     # Check if user is either admin or regular user (any authenticated user)
-    if not request.user.is_authenticated:
-        return redirect('login')  # Redirect to login page if user is not authenticated
-
     form = EventForm(request.POST or None)
     
     if form.is_valid():

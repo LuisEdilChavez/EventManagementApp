@@ -1,136 +1,40 @@
 {% load static %}
-
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-<head>
+  <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register | Montclair Connect</title>
+    <title>Registration or Sign Up form</title> 
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            background-image: url("{% static 'images/CollegeSide.jpeg' %}");
-            background-size: cover;
-            background-position: center;
-            font-family: Arial, Helvetica, sans-serif;
-        }
-        .navbar {
-            display: flex;
-            justify-content: center;
-            background-color: rgba(255, 0, 0, 0.7);
-            padding: 15px;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-        .navbar a {
-            color: white;
-            padding: 14px 20px;
-            text-decoration: none;
-            font-size: 18px;
-        }
-        .navbar a:hover {
-            background-color: darkred;
-            border-radius: 5px;
-        }
-        .wrapper {
-            max-width: 400px;
-            margin: 100px auto;
-            background: rgba(255, 255, 255, 0.9);
-            padding: 30px;
-            border-radius: 10px;
-            text-align: center;
-        }
-        .wrapper h2 {
-            margin-bottom: 20px;
-        }
-        .input-box input, .input-box select {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-        }
-        .input-box.button input {
-            background-color: red;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-        .input-box.button input:hover {
-            background-color: darkred;
-        }
-        .policy {
-            display: flex;
-            align-items: center;
-            margin: 10px 0;
-        }
-        .policy input {
-            margin-right: 10px;
-        }
-        .text a {
-            color: red;
-        }
-    </style>
-</head>
-<body>
-
-<div class="navbar">
-    <a href="{% url 'home' %}">Home</a>
-    <a href="{% url 'dashboard' %}">Dashboard</a>
-    <a href="{% url 'login' %}">Login</a>
-    <a href="{% url 'register' %}">Don't have an account?</a>
-</div>
-
-<div class="wrapper">
-    <h2>Create an Account</h2>
-    <form method="POST">
+  </head>
+  <body>
+    <div class="wrapper">
+      <h2>Registration</h2>
+      <form action="{% url 'register' %}" method="POST">
         {% csrf_token %}
-        
         <div class="input-box">
-            <label for="{{ form.username.id_for_label }}">Username</label>
-            {{ form.username }}
-            <small>{{ form.username.help_text }}</small>
+          <input type="text" name="username" placeholder="Enter your name" required>
         </div>
-
         <div class="input-box">
-            <label for="{{ form.email.id_for_label }}">Email</label>
-            {{ form.email }}
-            <small>{{ form.email.help_text }}</small>
+          <input type="email" name="email" placeholder="Enter your email" required>
         </div>
-
         <div class="input-box">
-            <label for="{{ form.password1.id_for_label }}">Password</label>
-            {{ form.password1 }}
-            <small>{{ form.password1.help_text }}</small>
+          <input type="password" name="password" placeholder="Create password" required>
         </div>
-
         <div class="input-box">
-            <label for="{{ form.password2.id_for_label }}">Password Confirmation</label>
-            {{ form.password2 }}
-            <small>{{ form.password2.help_text }}</small>
+          <input type="password" name="confirm_password" placeholder="Confirm password" required>
         </div>
-
-        <div class="input-box">
-            <label for="{{ form.phone_number.id_for_label }}">Phone number</label>
-            {{ form.phone_number }}
-            <small>{{ form.phone_number.help_text }}</small>
+        <div class="policy">
+          <input type="checkbox" name="accept_terms" required>
+          <h3>I accept all terms & conditions</h3>
         </div>
-
-        <div class="input-box">
-            <label for="{{ form.receive_sms.id_for_label }}">Opt-in for SMS notifications</label>
-            {{ form.receive_sms }}
-            <small>{{ form.receive_sms.help_text }}</small>
-        </div>
-
         <div class="input-box button">
-            <input type="submit" value="Register Now">
+          <input type="submit" value="Register Now">
         </div>
-    </form>
-    <div class="text">
-        <h3>Already have an account? <a href="{% url 'login' %}">Login now</a></h3>
+        <div class="text">
+          <h3>Already have an account? <a href="{% url 'login' %}">Login now</a></h3>
+        </div>
+      </form>
     </div>
-</div>
-
-</body>
+  </body>
 </html>

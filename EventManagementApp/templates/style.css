@@ -10,7 +10,7 @@ body{
   display: flex;
   align-items: center;
   justify-content: center;
-  background:linear-gradient(-135deg, #69a1cf, #41d09c);
+  background: linear-gradient(-135deg, #ff4d4d, #cc0000);
 }
 .wrapper{
   position: relative;
