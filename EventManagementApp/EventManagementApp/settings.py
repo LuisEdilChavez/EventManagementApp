@@ -125,8 +125,8 @@ STATICFILES_DIRS = [BASE_DIR / "static"]
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# Fallback redirect URL incase app settings dont work
-LOGIN_REDIRECT_URL = '/admin_dashboard/'  
+# redirects to dashboard after a successful login
+LOGIN_REDIRECT_URL = 'dashboard'  
 LOGOUT_REDIRECT_URL = '/' # goes to homepage after logout
 
 #Email backend here.

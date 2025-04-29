@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from users.views import home_view, dashboard_view
+from users.views import home_view, dashboard_view, registration_view, login_view
 from django.conf import settings
 from django.conf.urls.static import static
 # Make sure to import the view names from views.py, Add a comma and the views name to the import.
@@ -37,5 +37,8 @@ urlpatterns = [
 
     # User URLs (user profile, registration, etc.)
     path('users/', include('users.urls')),
+
+    #url path to registration page
+    path('register/', registration_view, name='register'),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) # media files etc

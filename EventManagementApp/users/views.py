@@ -1,36 +1,73 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth.forms import UserCreationForm
+from .forms import UserCreationForm, ProfileForm
 from django.contrib.auth.decorators import login_required
+from events.forms import EventForm
+from django.contrib.auth import authenticate, login
+from django.utils import timezone  
 from events.models import Event
-from .forms import ProfileForm
-
-# Create views here.
+from django.core.mail import send_mail
+from django.conf import settings
+from django.contrib import messages
+from twilio.rest import Client
 def registration_view(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
-            form.save()
+            # Save the user and get the user object
+            user = form.save()
+
+            # Send a welcome email to the user's email address
+            send_mail(
+                'Welcome to Montclair Connect! Here is a Confirmation email',
+                
+                settings.DEFAULT_FROM_EMAIL,  # This is your email address set in settings.py
+                [user.email],  # This will be the email entered by the user
+                fail_silently=False,
+            )
+
+            # Send an SMS notification to the user's phone number (if entered)
+            if user.phone_number:
+                sms_message = "Welcome to Montclair Connect! You've successfully registered."
+                send_sms(user.phone_number, sms_message)
+
+            messages.success(request, "Registration successful! Please check your email for confirmation.")
             return redirect('login')
     else:
         form = UserCreationForm()
-    return render(request, 'registration.html', {'form': form})
+
+    return render(request, 'accountcreation/registration_page.html', {'form': form})
+
 
 def home_view(request):
     return render(request, 'home_page.html')
 
-
-
-# This view displays the users dashboard, which depends on the users role (Admin or regular user) based on their credentials
 def dashboard_view(request):
-    user = request.user
-
-    if user.is_superuser:
+    # Show all events if admin; otherwise only user's own upcoming events
+    if request.user.is_superuser:
+        upcoming_events = Event.objects.filter(event_date__gte=timezone.now()).order_by('event_date')
         role = "Admin"
-        return render(request, 'admin_dashboard.html', {'role': role})
     else:
+        upcoming_events = Event.objects.filter(
+            event_date__gte=timezone.now(), created_by=request.user
+        ).order_by('event_date')
         role = "User"
-        return render(request, 'user_dashboard.html', {'role': role})
 
+    # Handle event creation
+    if request.method == 'POST':
+        form = EventForm(request.POST)
+        if form.is_valid():
+            event = form.save(commit=False)
+            event.created_by = request.user
+            event.save()
+            return redirect('dashboard')
+    else:
+        form = EventForm()
+
+    return render(request, 'users/dashboard.html', {
+        'events': upcoming_events,
+        'form': form,
+        'role': role
+    })
 @login_required
 def view_profile(request):
     profile = request.user.profile
@@ -44,5 +81,16 @@ def edit_profile(request):
     if form.is_valid():
         form.save()
         return redirect('view_profile')
-
     return render(request, 'users/edit_profile.html', {'form': form})
+
+def login_view(request):
+ if request.method == "POST":
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('dashboard')  # Redirect to dashboard after login
+        else:
+            return render(request, 'users/login_page.html', {'error': 'Invalid credentials'})
+        return render(request, 'users/login_page.html')  

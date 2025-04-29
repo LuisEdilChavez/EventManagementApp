@@ -8,7 +8,7 @@ class Event(models.Model):
   event_date = models.DateTimeField()
   created_by = models.ForeignKey(User, on_delete=models.CASCADE)
   created_at = models.DateTimeField(auto_now_add=True)
-
+  location = models.CharField(max_length=200, default='Montclair')
   def _str_(self):
     return self.title 
 # This is data structure for the event.

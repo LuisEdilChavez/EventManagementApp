@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* Your existing styles */
+    </style>
+</head>
+<body>
+
+    <div class="navbar">
+        <h2>Montclair State University</h2>
+        <div class="nav-links">
+            <a href="#">Home</a>
+            <a href="#">Active Events</a>
+            <a href="#">Previous Events</a>
+            <a href="#">Upcoming Events</a>
+            <a href="#">Settings</a>
+            <a href="#">Logout</a>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="header">
+            <div class="search-bar">
+                <input type="text" placeholder="Search...">
+            </div>
+            <div class="profile">
+                <strong>User</strong>
+            </div>
+        </div>
+
+        <!-- Event Management Form for Admins or Users -->
+        {% if role == "Admin" or role == "User" %}
+            <div class="event-management">
+                <h3>Create an Event</h3>
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit">Create Event</button>
+                </form>
+            </div>
+        {% endif %}
+
+        <!-- Display upcoming events -->
+        <div class="upcoming-events">
+            <h3>Upcoming Events</h3>
+            <ul>
+                {% for event in events %}
+                    <li>
+                        <strong>{{ event.title }}</strong><br>
+                        {{ event.event_date }}<br>
+                        {{ event.description }}<br>
+                        {% if event.created_by == user %}
+                            <span>Created by you</span>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+</body>
+</html>
