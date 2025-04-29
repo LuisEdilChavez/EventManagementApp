@@ -10,6 +10,14 @@ from django.conf import settings
 from django.contrib import messages
 from twilio.rest import Client
 
+def send_sms(to, message):
+    client = Client(settings.TWILIO_ACCOUNT_SID, settings.TWILIO_AUTH_TOKEN)
+    client.messages.create(
+        to=to,
+        from_=settings.TWILIO_PHONE_NUMBER,
+        body=message
+    )
+
 def registration_view(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
@@ -32,6 +40,8 @@ def registration_view(request):
                 send_sms(user.phone_number, sms_message)
 
             messages.success(request, "Registration successful! Please check your email for confirmation.")
+            print("Form is valid. Sending email to:", user.email)
+            print("Phone number:", user.phone_number)
             return redirect('login')
     else:
         form = UserCreationForm()
@@ -84,13 +94,18 @@ def edit_profile(request):
     return render(request, 'users/edit_profile.html', {'form': form})
 
 def login_view(request):
- if request.method == "POST":
+    if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
+        print(f"Login attempt - Username: {username}, Password: {password}")  # Debug
+
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect('dashboard')  # Redirect to dashboard after login
+            return redirect('/')  # Change to your desired page
         else:
-            return render(request, 'users/login_page.html', {'error': 'Invalid credentials'})
-        return render(request, 'users/login_page.html')  
+            return render(request, 'accountcreation/login_page.html', {
+                'error': 'Invalid credentials'
+            })
+
+    return render(request, 'accountcreation/login_page.html')

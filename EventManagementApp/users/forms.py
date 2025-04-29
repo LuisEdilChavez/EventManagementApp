@@ -16,6 +16,7 @@ class CustomUserCreationForm(UserCreationForm):
             'phone_number': 'Include country code, e.g., +1234567890.',
             'receive_sms': 'Opt-in for SMS notifications.',
         }
+    
     class Meta:
         model = User
         fields = ['username', 'email', 'password1', 'password2']
