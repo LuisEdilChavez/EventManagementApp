@@ -34,13 +34,14 @@ def registration_view(request):
             return redirect('login')
     else:
         form = UserCreationForm()
-
-    return render(request, 'accountcreation/registration_page.html', {'form': form})
-
+    return render(request, 'registration.html', {'form': form})
 
 def home_view(request):
     return render(request, 'home_page.html')
 
+
+
+# This view displays the users dashboard, which depends on the users role (Admin or regular user) based on their credentials
 def dashboard_view(request):
     # Show all events if admin; otherwise only user's own upcoming events
     if request.user.is_superuser:

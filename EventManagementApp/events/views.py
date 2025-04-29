@@ -23,7 +23,3 @@ def create_event(request):
             return redirect('user_dashboard')  # Regular user dashboard
 
     return render(request, 'events/create_event.html', {'form': form})
-# event list view
-def event_list(request):
-    events = Event.objects.all()
-    return render(request, 'events/event_list.html', {'events': events})
