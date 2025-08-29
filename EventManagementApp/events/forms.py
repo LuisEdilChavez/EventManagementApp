@@ -1,10 +1,10 @@
 from django import forms
-from .models import Event  # Assuming you have an Event model
-
+from .models import Event  
+# form for filling data into the object of the event model
 class EventForm(forms.ModelForm):
     class Meta:
         model = Event
-        fields = ['title', 'description', 'event_date', 'location']  # Add fields as per your Event model
+        fields = ['title', 'description', 'event_date', 'location']  #Fields for our event model
 
     def __init__(self, *args, **kwargs):
         super(EventForm, self).__init__(*args, **kwargs)

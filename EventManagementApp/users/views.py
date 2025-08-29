@@ -29,7 +29,7 @@ def registration_view(request):
             send_mail(
                 'Welcome to Montclair Connect! Here is a Confirmation email',
                 
-                settings.DEFAULT_FROM_EMAIL,  # This is your email address set in settings.py
+                settings.DEFAULT_FROM_EMAIL,  # This the email address set in settings.py
                 [user.email],  # This will be the email entered by the user
                 fail_silently=False,
             )
@@ -50,7 +50,7 @@ def registration_view(request):
 def home_view(request):
     return render(request, 'home_page.html')
 
-# This view displays the users dashboard, which depends on the users role (Admin or regular user) based on their credentials
+# This view displays the users dashboard, which depends on the users role (Admin or regular user) based on their credentials .. its broken
 def dashboard_view(request):
     # Show all events if admin; otherwise only user's own upcoming events
     if request.user.is_superuser:
@@ -62,7 +62,7 @@ def dashboard_view(request):
         ).order_by('event_date')
         role = "User"
 
-    # Handle event creation
+    # Handles event creation
     if request.method == 'POST':
         form = EventForm(request.POST)
         if form.is_valid():
@@ -78,6 +78,8 @@ def dashboard_view(request):
         'form': form,
         'role': role
     })
+
+# decorators.. teeheeeeee
 @login_required
 def view_profile(request):
     profile = request.user.profile
@@ -92,7 +94,7 @@ def edit_profile(request):
         form.save()
         return redirect('view_profile')
     return render(request, 'users/edit_profile.html', {'form': form})
-
+# Login view for the request
 def login_view(request):
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -107,5 +109,5 @@ def login_view(request):
             return render(request, 'accountcreation/login_page.html', {
                 'error': 'Invalid credentials'
             })
-
+    #Request
     return render(request, 'accountcreation/login_page.html')
